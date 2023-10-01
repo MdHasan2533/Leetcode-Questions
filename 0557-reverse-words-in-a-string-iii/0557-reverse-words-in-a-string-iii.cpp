@@ -2,15 +2,15 @@ class Solution {
 public:
     string reverseWords(string s) {
         int start = 0;
-        int n = s.size();
-
-        for(int end = 0; end < n; end++){
-            if(s[end] == ' '){
-                reverse(s.begin() + start, s.begin() + end);
-                start = end + 1;
+        int end = 0;
+        while(start < s.size()){
+            while(end < s.size() && s[end]!= ' '){
+                end++;
             }
+            reverse(s.begin() + start,s.begin() + end);
+            start = end + 1;
+            end = start;
         }
-        reverse(s.begin()+start, s.end());
         return s;
     }
 };
