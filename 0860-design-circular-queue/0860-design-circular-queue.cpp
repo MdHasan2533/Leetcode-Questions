@@ -1,76 +1,81 @@
+//Using LINKED LIST
+class Node{
+    public:
+    int data;
+    Node *next;
+
+    Node(int data){
+        this -> data = data;
+        next = NULL;
+    }
+};
+
 class MyCircularQueue {
-    int *arr;
-    int front;
-    int rear;
-    int size;
 public:
+    int size = 0;
+    int currSize = 0;
+    Node* front = NULL;
+    Node* rear = NULL;
+
     MyCircularQueue(int k) {
         size = k;
-        arr = new int[size];
-        front = rear = -1;
     }
     
     bool enQueue(int value) {
         if(isFull()){
-            return false;
+            return 0;
         }
-        if( front == -1){
-            front = rear = 0;
+        Node* newnode = new Node(value);
+        if( front == NULL && rear == NULL){
+            front = newnode;
+            rear = newnode;
         }
-        else if( rear == size - 1 && front != 0){
-            rear = 0;
+        else {
+            rear -> next = newnode;
         }
-        else{
-            rear++;
-        }
-        arr[rear] = value;
-        return true;
+        newnode -> next = front;
+        rear = newnode;
+        currSize++;
+        return 1; 
     }
     
     bool deQueue() {
-        if( isEmpty() ){
-            return false;
+        if(isEmpty()){
+            return 0;
         }
-        int ans = arr[front];
-        arr[front] = -1;
-        if( front == rear ){
-            front = rear = - 1;
-        }
-        else if( front == size - 1 ){
-            front = 0;
+        if(front == rear){
+            front = NULL;
+            rear = NULL;
         }
         else {
-            front++;
+            front = front -> next;
+            delete rear -> next;
+            rear -> next = front;
         }
-        return true;
+        currSize--;
+        return 1;
     }
     
     int Front() {
-        if(front == -1){
+        if(isEmpty()){
             return -1;
         }
-        return arr[front];
+        return front -> data;
     }
     
     int Rear() {
-        if(front == -1){
+        if(isEmpty()){
             return -1;
         }
-        return arr[rear];
+        return rear -> data;
     }
     
     bool isEmpty() {
-        if( front == -1 ){
-            return true;
-        }
-        return false;
+        return currSize == 0;
     }
     
     bool isFull() {
-        if( (front == 0 && rear == size -1) || (front != 0 && size != 1 && rear == (front - 1)%(size -1)) ){
-            return true;
-        }
-        return false;
+        return currSize == size;
     }
 };
 
