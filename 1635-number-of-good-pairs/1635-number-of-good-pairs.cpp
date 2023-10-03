@@ -1,15 +1,19 @@
-//TC- O(N^2)
+//TC: O(n)
+//SC: O(n)
 class Solution {
 public:
     int numIdenticalPairs(vector<int>& nums) {
-        long long int count = 0;
-        for(int i = 0; i < nums.size();i++){
-            for(int j = i+ 1; j < nums.size();j++){
-                if(nums[i] == nums[j]){
-                    count++;
-                }
+        unordered_map<int,int> m;
+        int ans = 0;
+        for( int num : nums){
+            if(m.find(num) != m.end()){
+                ans += m[num];
+                m[num]++;
+            }
+            else{
+                m[num] = 1;
             }
         }
-        return count;
+        return ans;
     }
 };
