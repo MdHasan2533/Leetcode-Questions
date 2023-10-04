@@ -1,22 +1,23 @@
 class MyHashMap {
 public:
-int map[1000001];
+    vector<int> mp;
     MyHashMap() {
-        for(int i = 0; i < 1000001; ++i){
-            map[i] = -1;
-        }
+        mp.resize(1e6+1,-1);//size= 1000001 and values in mp = -1
     }
     
     void put(int key, int value) {
-        map[key] = value;
+        mp[key] = value;
     }
     
     int get(int key) {
-        return map[key];
+        if(mp[key] != -1){
+            return mp[key];
+        }
+        return -1;
     }
     
     void remove(int key) {
-        map[key] = -1;
+        mp[key] = -1;
     }
 };
 
