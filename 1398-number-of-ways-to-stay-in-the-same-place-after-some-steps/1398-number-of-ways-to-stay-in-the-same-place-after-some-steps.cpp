@@ -23,7 +23,7 @@ public:
         return t[idx][steps] = ans;
     }
     int numWays(int steps, int arrLen) {
-        arrLen = min ( arrLen , steps);
+        arrLen = min ( arrLen , steps/2 + 1);
         n = arrLen;
         memset(t, -1, sizeof(t));
         return solve(0, steps);
