@@ -1,27 +1,19 @@
 class Solution {
 public:
-    
-    vector<int> arr1;
-    
     int majorityElement(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        int n= nums.size();
-        int i= 0;
-        while(i<n)
-        {
-            int check= nums[i];
-            int count= 0;
-
-            while(i<n && nums[i]==check)
-            {
-                count++;
-                i++;
+        int cnt = 0;
+        int ans = 0;
+        for ( int num : nums){
+            if(cnt == 0){
+                ans = num;
             }
-
-            if(count>n/2)
-                return check;
+            if(num == ans){
+                cnt++;
+            }
+            else{
+                cnt--;
+            }
         }
-
-        return false;
+        return ans;
     }
 };
