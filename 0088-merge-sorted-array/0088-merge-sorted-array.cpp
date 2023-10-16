@@ -1,26 +1,40 @@
 class Solution {
+private:
+    void swapgreater(vector<int>& nums1 ,vector<int>& nums2, int idx1, int idx2){
+        if( nums1[idx1] > nums2[idx2]){
+            swap(nums1[idx1], nums2[idx2]);
+        }
+    }
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        int left = m - 1;
-        int right = 0;
+        int len = ( n + m);
+        int gap = ( len / 2) + (len % 2);
+        
+        while( gap > 0 ){
+            int left = 0;
+            int right = gap;
+            while( right < len ){
 
-        while( left >= 0 && right < n){
-
-            if( nums1[left] > nums2[right]){
-                swap(nums1[left], nums2[right]);
-                left--;
+                if( left < m && right >= m){
+                    swapgreater(nums1, nums2, left, right - m);
+                }
+                else if( left >= m){
+                    swapgreater( nums2, nums2, left - m, right - m);
+                }
+                else if(left < m && right < m){
+                    swapgreater(nums1, nums1, left, right);
+                }
+                left++;
                 right++;
             }
-            else{
-                break;
-            }
+
+            if( gap == 1) break;
+            gap = (gap / 2) + ( gap % 2);
         }
 
-        sort(nums1.begin(), nums1.begin() + m);
-        sort(nums2.begin(), nums2.end());
-
-        for( int i = m; i < m+n; i++){
-            nums1[i] = nums2[i - m];
+        for( int i = m; i < len; i++){
+            nums1[i] = nums2[i-m];
         }
+        return;
     }
 };
