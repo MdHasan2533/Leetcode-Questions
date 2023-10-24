@@ -12,21 +12,25 @@
 class Solution {
 public:
     vector<int> largestValues(TreeNode* root) {
-        vector<int> res;
-        dfs(root, 1, res);
-        return res;
+        vector<int> maxs;
+        find(root, 0, maxs);
+        return maxs;
     }
 
 private:
-    void dfs(TreeNode* node, int depth, vector<int>& res) {
+    void find(TreeNode* node, int row, vector<int>& maxs) {
         if (!node) {
             return;
         }
-        dfs(node->left, depth + 1, res);
-        dfs(node->right, depth + 1, res);
-        if (depth > res.size()) {
-            res.resize(depth, INT_MIN);
+
+        if (row >= maxs.size()) {
+            maxs.push_back(node->val);
         }
-        res[depth - 1] = max(res[depth - 1], node->val);
+        else {
+            maxs[row] = max(maxs[row], node->val);
+        }
+
+        find(node->left, row + 1, maxs);
+        find(node->right, row + 1, maxs);
     }
 };
